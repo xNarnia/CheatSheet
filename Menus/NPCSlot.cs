@@ -252,7 +252,7 @@ namespace CheatSheet.Menus
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			Main.instance.LoadNPC(npcType);
+			ModUtils.LoadNPC(npcType);
 
 			Texture2D useBackgroundTexture = (isFiltered ? filteredBackgroundTexture : backgroundTexture).Value;
 

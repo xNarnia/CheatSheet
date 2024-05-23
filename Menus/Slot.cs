@@ -265,7 +265,11 @@ namespace CheatSheet.Menus
 			spriteBatch.Draw(Slot.backgroundTexture.Value, base.DrawPosition, null, Color.White, 0f, Vector2.Zero, base.Scale, SpriteEffects.None, 0f);
 
 			float sizeLimit = backgroundTexture.Width() * Scale * 0.6f;
-			ItemSlot.DrawItemIcon(item, ItemSlot.Context.InventoryItem, spriteBatch, DrawPosition + new Vector2(backgroundTexture.Width() * Scale * 0.5f), 1f, sizeLimit, Color.White);
+			// DrawItemIcon loads texture with ImmediateLoad, so we need to check to prevent stutter.
+			if (TextureAssets.Item[item.type].State == AssetState.NotLoaded)
+				ModUtils.LoadItem(item.type);
+			if (TextureAssets.Item[item.type].State == AssetState.Loaded)
+				ItemSlot.DrawItemIcon(item, ItemSlot.Context.InventoryItem, spriteBatch, DrawPosition + new Vector2(backgroundTexture.Width() * Scale * 0.5f), 1f, sizeLimit, Color.White);
 			if (ItemID.Sets.TrapSigned[item.type])
 				spriteBatch.Draw(TextureAssets.Wire.Value, DrawPosition + new Vector2(40f, 40f) * Scale, new Rectangle(4, 58, 8, 8), Color.White, 0f, new Vector2(4f), 1f, SpriteEffects.None, 0f);
 
